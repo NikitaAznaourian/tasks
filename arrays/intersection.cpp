@@ -11,15 +11,28 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>
+#include <set>
 #include <map>
 #include <string>
 #include <algorithm>
 
 using namespace std;
 
+struct classcomp {
+    bool operator()(const pair<int,bool>& lhs, const pair<int,bool>& rhs) const {
+        if (lhs.first != rhs.first)
+            return lhs.first < rhs.first;
+        
+        if (rhs.second)
+            return false;
+        
+        return true;
+    }
+};
+
 pair<int,int> maxIntersection(vector<pair<int,int>>& v) {
     
-    multimap<int, bool> points; // true - open, false - closing
+    multiset<pair<int, bool>, classcomp> points; // true - open, false - closing
     for (int i = 0; i < v.size(); i++) {
         if (v[i].first > v[i].second)
             throw "bad input";
@@ -30,7 +43,7 @@ pair<int,int> maxIntersection(vector<pair<int,int>>& v) {
     int maxInt = 0, maxPoint = 0;
     int curInt = 0;
     
-    for (multimap<int,bool>::const_iterator it = points.begin(); it != points.end(); it++) {
+    for (multiset<pair<int,bool>, classcomp>::const_iterator it = points.begin(); it != points.end(); it++) {
         if (it->second) {
             if (++curInt > maxInt) {
                 maxInt = curInt;
