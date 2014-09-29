@@ -26,11 +26,6 @@ vector<int> multiply(const vector<int>& v) {
     if (size == 0)
         return {};
 
-    if (size == 1)
-        return {1};
-
-    // size >= 2
-
     vector<int> b(size);
     b[0] = 1;
     for (size_t i = 1; i < size; i++) {
