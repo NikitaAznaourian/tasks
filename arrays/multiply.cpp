@@ -21,6 +21,12 @@ using namespace std;
 
 
 vector<int> multiply(vector<int>& v) {
+    if (v.size() == 0)
+        return {};
+
+    if (v.size() == 1)
+        return {0};
+
     vector<int> b(v.size());
     int cur = 1;
     
@@ -37,13 +43,6 @@ vector<int> multiply(vector<int>& v) {
     
     vector<int> res(v.size());
     
-    if (v.size() == 0)
-        return res;
-    
-    if (v.size() == 1) {
-        res[0] = 0;
-        return res;
-    }
     
     res[0] = c[1];
     res[v.size()-1] = b[v.size()-2];
