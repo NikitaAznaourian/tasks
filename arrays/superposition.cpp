@@ -94,6 +94,12 @@ int main(int argc, const char * argv[])
         if (res != 4)
             throw "Fifth test failed";
 
+        // 6 test
+        v = {{1, 10}, {2, 3}, {4, 7}, {5, 6}};
+        res = maxCover(v);
+        if (res != 3)
+            throw "Sixth test failed";
+
         cout << "All tests passed" << endl;
     
     } catch(char const* err) {
