@@ -92,8 +92,8 @@ int main(int argc, const char * argv[])
 
         cout << "All tests passed" << endl;
     
-    } catch(string err) {
-        cout << err.c_str() << endl;
+    } catch(char const* err) {
+        cout << err << endl;
     }
 
     return 0;
