@@ -52,31 +52,31 @@ int main(int argc, const char * argv[])
         // 1 test
         vector<pair<int,int>> v {{1,3}, {2,4}};
         auto res = maxIntersection(v);
-        if (res.first != 2 || res.second != 2)
+        if (res != make_pair(2, 2))
             throw "First test failed";
         
         // 2 test
         v = {{5,7}, {3,4}};
         res = maxIntersection(v);
-        if (res.first != 1 || res.second != 3)
+        if (res != make_pair(1, 3))
             throw "Second test failed";
         
         // 3 test
         v = {{-1,-1}, {-3,-3}, {100, 1000}, {50, 120}, {0,0}};
         res = maxIntersection(v);
-        if (res.first != 2 || res.second != 100)
+        if (res != make_pair(2, 100))
             throw "Third test failed";
 
         // 4 test
         v = {{-1,-1}, {-1,-1}};
         res = maxIntersection(v);
-        if (res.first != 2 || res.second != -1)
+        if (res != make_pair(2, -1))
             throw "Fourth test failed";
 
         // 5 test
         v = {{-2,-1}, {-1,0}};
         res = maxIntersection(v);
-        if (res.first != 2 || res.second != -1)
+        if (res != make_pair(2, -1))
             throw "Fifth test failed";
 
         cout << "All tests passed" << endl;
