@@ -27,7 +27,7 @@ vector<int> multiply(const vector<int>& v) {
         return {};
 
     if (size == 1)
-        return {0};
+        return {1};
 
     // size >= 2
 
@@ -70,7 +70,7 @@ int main(int argc, const char * argv[])
         // 3 test
         v = {2};
         res = multiply(v);
-        if (res != vector<int>{0})
+        if (res != vector<int>{1})
             throw "Third test failed";
 
         // 4 test
