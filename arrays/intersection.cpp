@@ -19,14 +19,17 @@
 using namespace std;
 
 pair<int,int> maxIntersection(const vector<pair<int,int>>& v) {
-    
-    multiset<pair<int, bool>> points; // false - open, true - closing
+
+    vector<pair<int, bool>> points; // false - open, true - closing
+    points.reserve(2 * v.size());
     for (size_t i = 0; i < v.size(); i++) {
         if (v[i].first > v[i].second)
             throw "bad input";
-        points.insert({v[i].first, false});
-        points.insert({v[i].second, true});
+        points.push_back({v[i].first, false});
+        points.push_back({v[i].second, true});
     }
+
+    sort(points.begin(), points.end());
     
     int maxInt = 0, maxPoint = 0;
     int curInt = 0;
