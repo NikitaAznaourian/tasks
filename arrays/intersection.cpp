@@ -30,10 +30,10 @@ struct classcomp {
     }
 };
 
-pair<int,int> maxIntersection(vector<pair<int,int>>& v) {
+pair<int,int> maxIntersection(const vector<pair<int,int>>& v) {
     
     multiset<pair<int, bool>, classcomp> points; // true - open, false - closing
-    for (int i = 0; i < v.size(); i++) {
+    for (size_t i = 0; i < v.size(); i++) {
         if (v[i].first > v[i].second)
             throw "bad input";
         points.insert({v[i].first, true});
@@ -43,7 +43,7 @@ pair<int,int> maxIntersection(vector<pair<int,int>>& v) {
     int maxInt = 0, maxPoint = 0;
     int curInt = 0;
     
-    for (multiset<pair<int,bool>, classcomp>::const_iterator it = points.begin(); it != points.end(); it++) {
+    for (auto it = points.cbegin(); it != points.cend(); it++) {
         if (it->second) {
             if (++curInt > maxInt) {
                 maxInt = curInt;
@@ -63,33 +63,29 @@ int main(int argc, const char * argv[])
     
         // 1 test
         vector<pair<int,int>> v {{1,3}, {2,4}};
-        pair<int,int> res = maxIntersection(v);
+        auto res = maxIntersection(v);
         if (res.first != 2 || res.second != 2)
             throw "First test failed";
         
         // 2 test
-        v.clear();
         v = {{5,7}, {3,4}};
         res = maxIntersection(v);
         if (res.first != 1 || res.second != 3)
             throw "Second test failed";
         
         // 3 test
-        v.clear();
         v = {{-1,-1}, {-3,-3}, {100, 1000}, {50, 120}, {0,0}};
         res = maxIntersection(v);
         if (res.first != 2 || res.second != 100)
             throw "Third test failed";
 
         // 4 test
-        v.clear();
         v = {{-1,-1}, {-1,-1}};
         res = maxIntersection(v);
         if (res.first != 2 || res.second != -1)
             throw "Fourth test failed";
 
         // 5 test
-        v.clear();
         v = {{-2,-1}, {-1,0}};
         res = maxIntersection(v);
         if (res.first != 2 || res.second != -1)
