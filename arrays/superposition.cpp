@@ -33,7 +33,7 @@ int maxCover(vector<pair<int,int>>& v) {
     for (int i = 0; i < v.size(); i++) {
         if (v[i].first > v[i].second)
             throw "bad input";
-        points.insert(make_pair(v[i].first, v[i].second-v[i].first));
+        points.insert({v[i].first, v[i].second-v[i].first});
     }
     
     int maxCover = 0;
@@ -65,43 +65,39 @@ int main(int argc, const char * argv[])
     try {
     
         // 1 test
-        vector<pair<int,int>> v {make_pair(100,1000), make_pair(1,3), make_pair(2,4)};
+        vector<pair<int,int>> v {{100,1000}, {1,3}, {2,4}};
         int res = maxCover(v);
         if (res != 1)
             throw "First test failed";
         
         // 2 test
-        v.clear();
-        v = {make_pair(1,7), make_pair(3,4)};
+        v = {{1,7}, {3,4}};
         res = maxCover(v);
         if (res != 2)
             throw "Second test failed";
         
         // 3 test
-        v.clear();
-        v = {make_pair(0,0)};
+        v = {{0,0}};
         res = maxCover(v);
         if (res != 1)
             throw "Third test failed";
 
         // 4 test
-        v.clear();
-        v = {make_pair(-1,-1), make_pair(-1,-1)};
+        v = {{-1,-1}, {-1,-1}};
         res = maxCover(v);
         if (res != 2 )
             throw "Fourth test failed";
 
         // 5 test
-        v.clear();
-        v = {make_pair(-2,2), make_pair(-1,-1), make_pair(-1,2), make_pair(-2, -1)};
+        v = {{-2,2}, {-1,-1}, {-1,2}, {-2, -1}};
         res = maxCover(v);
         if (res != 4)
             throw "Fifth test failed";
 
         cout << "All tests passed" << endl;
     
-    } catch(string err) {
-        cout << err.c_str() << endl;
+    } catch(char const* err) {
+        cout << err << endl;
     }
 
     return 0;
