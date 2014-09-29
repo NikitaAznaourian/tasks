@@ -70,21 +70,18 @@ int main(int argc, const char * argv[])
             throw "Second test failed";
         
         // 3 test
-        v.clear();
         v = {2};
         res = multiply(v);
         if (res != vector<int>{0})
             throw "Third test failed";
 
         // 4 test
-        v.clear();
         v = {-1, -10, 10};
         res = multiply(v);
         if (res != vector<int>{-100, -10, 10})
             throw "Fourth test failed";
 
         // 5 test
-        v.clear();
         v = {100, 2, -3, 0};
         res = multiply(v);
         if (res != vector<int>{0, 0, 0, -600})
