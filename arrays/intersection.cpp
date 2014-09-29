@@ -25,8 +25,8 @@ pair<int,int> maxIntersection(const vector<pair<int,int>>& v) {
     for (size_t i = 0; i < v.size(); i++) {
         if (v[i].first > v[i].second)
             throw "bad input";
-        points.push_back({v[i].first, false});
-        points.push_back({v[i].second, true});
+        points.emplace_back(v[i].first, false);
+        points.emplace_back(v[i].second, true);
     }
 
     sort(points.begin(), points.end());
