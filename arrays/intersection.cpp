@@ -18,33 +18,21 @@
 
 using namespace std;
 
-struct classcomp {
-    bool operator()(const pair<int,bool>& lhs, const pair<int,bool>& rhs) const {
-        if (lhs.first != rhs.first)
-            return lhs.first < rhs.first;
-        
-        if (rhs.second)
-            return false;
-        
-        return true;
-    }
-};
-
 pair<int,int> maxIntersection(const vector<pair<int,int>>& v) {
     
-    multiset<pair<int, bool>, classcomp> points; // true - open, false - closing
+    multiset<pair<int, bool>> points; // false - open, true - closing
     for (size_t i = 0; i < v.size(); i++) {
         if (v[i].first > v[i].second)
             throw "bad input";
-        points.insert({v[i].first, true});
-        points.insert({v[i].second, false});
+        points.insert({v[i].first, false});
+        points.insert({v[i].second, true});
     }
     
     int maxInt = 0, maxPoint = 0;
     int curInt = 0;
     
     for (auto it = points.cbegin(); it != points.cend(); it++) {
-        if (it->second) {
+        if (!it->second) {
             if (++curInt > maxInt) {
                 maxInt = curInt;
                 maxPoint = it->first;
