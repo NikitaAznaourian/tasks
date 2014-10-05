@@ -6,6 +6,12 @@
 //  Copyright (c) 2014 Nikita Aznauryan. All rights reserved.
 //
 
+/*
+ Conditions: We have an array of segments. Write a function that returns a max number of nested segments.
+ Complexity:
+ O(n^2) with additional memory of O(n) size.
+ */
+
 #include <iostream>
 #include <vector>
 #include <unordered_map>
@@ -27,32 +33,30 @@ struct classcomp {
     }
 };
 
-int maxCover(vector<pair<int,int>>& v) {
+int maxCover(const vector<pair<int,int>>& v) {
     
-    multiset<pair<int, int>, classcomp> points; // true - open, false - closing
-    for (int i = 0; i < v.size(); i++) {
+    multimap<pair<int, int>, int, classcomp> points; // second param is cover level
+    for (size_t i = 0; i < v.size(); i++) {
         if (v[i].first > v[i].second)
             throw "bad input";
-        points.insert({v[i].first, v[i].second-v[i].first});
+        points.insert({{v[i].first, v[i].second-v[i].first}, 1}); // initialize cover level with 1
     }
     
     int maxCover = 0;
     
-    for (multiset<pair<int,int>, classcomp>::const_iterator it = points.begin(); it != points.end(); it++) {
-        int pointCover = 1;
+    for (auto it = points.begin(); it != points.end(); it++) {
+        int pointCover = it->second;
+        if (pointCover > maxCover)
+            maxCover = pointCover;
         
-        multiset<pair<int,int>, classcomp>::const_iterator it2 = it;
+        auto it2 = it;
         it2++;
         
-        while (it2 != points.end() && (it2->first <= it->first+it->second) ) {
-            if (it2->first+it2->second <= it->first+it->second) {
-                pointCover++;
+        while (it2 != points.end() && (it2->first.first <= it->first.first+it->first.second) ) {
+            if (it2->first.first+it2->first.second <= it->first.first+it->first.second) {
+                it2->second += 1;
             }
             it2++;
-        }
-        
-        if (pointCover > maxCover) {
-            maxCover = pointCover;
         }
         
     }
@@ -63,19 +67,19 @@ int maxCover(vector<pair<int,int>>& v) {
 int main(int argc, const char * argv[])
 {
     try {
-    
+
         // 1 test
         vector<pair<int,int>> v {{100,1000}, {1,3}, {2,4}};
         int res = maxCover(v);
         if (res != 1)
             throw "First test failed";
-        
+
         // 2 test
         v = {{1,7}, {3,4}};
         res = maxCover(v);
         if (res != 2)
             throw "Second test failed";
-        
+
         // 3 test
         v = {{0,0}};
         res = maxCover(v);
@@ -101,11 +105,11 @@ int main(int argc, const char * argv[])
             throw "Sixth test failed";
 
         cout << "All tests passed" << endl;
-    
+        
     } catch(char const* err) {
         cout << err << endl;
     }
-
+    
     return 0;
 }
 
