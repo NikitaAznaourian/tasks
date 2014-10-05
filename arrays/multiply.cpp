@@ -20,36 +20,29 @@ using namespace std;
 
 
 
-vector<int> multiply(vector<int>& v) {
-    vector<int> b(v.size());
-    int cur = 1;
-    
-    for (int i = 0; i < v.size(); i++) {
-        cur *= v[i]; b[i] = cur;
+vector<int> multiply(const vector<int>& v) {
+    auto size = v.size();
+
+    if (size == 0)
+        return {};
+
+    vector<int> b(size);
+    b[0] = 1;
+    for (size_t i = 1; i < size; i++) {
+        b[i] = v[i-1] * b[i-1];
     }
     
-    cur = 1;
-    vector<int> c(v.size());
-    for (int i = (int)v.size()-1; i>= 0; i--) {
-        cur *= v[i];
-        c[i] = cur;
+    vector<int> c(size);
+    c[size-1] = 1;
+    for (size_t i = size-1; i > 0; i--) {
+        c[i-1] = c[i] * v[i];
     }
     
-    vector<int> res(v.size());
-    
-    if (v.size() == 0)
-        return res;
-    
-    if (v.size() == 1) {
-        res[0] = 0;
-        return res;
+    vector<int> res(size);
+    for (size_t i = 0; i < size; i++) {
+        res[i] = b[i] * c[i];
     }
-    
-    res[0] = c[1];
-    res[v.size()-1] = b[v.size()-2];
-    for (int i = 1; i < v.size()-1; i++) {
-        res[i] = b[i-1]*c[i+1];
-    }
+
     return res;
 }
 
@@ -60,40 +53,37 @@ int main(int argc, const char * argv[])
         // 1 test
         vector<int> v {1,2,3,4};
         vector<int> res = multiply(v);
-        if (res.size() != 4 || res[0] != 24 || res[1] != 12 || res[2] != 8 || res[3] != 6)
+        if (res != vector<int>{24, 12, 8, 6})
             throw "First test failed";
         
         // 2 test
         v.clear();
         res = multiply(v);
-        if (res.size() != 0)
+        if (res != vector<int>{})
             throw "Second test failed";
         
         // 3 test
-        v.clear();
         v = {2};
         res = multiply(v);
-        if (res.size() != 1 || res[0] != 0)
+        if (res != vector<int>{1})
             throw "Third test failed";
 
         // 4 test
-        v.clear();
         v = {-1, -10, 10};
         res = multiply(v);
-        if (res.size() != 3 || res[0] != -100 || res[1] != -10 || res[2] != 10)
+        if (res != vector<int>{-100, -10, 10})
             throw "Fourth test failed";
 
         // 5 test
-        v.clear();
         v = {100, 2, -3, 0};
         res = multiply(v);
-        if (res.size() != 4 || res[0] != 0 || res[1] != 0 || res[2] != 0 || res[3] != -600)
+        if (res != vector<int>{0, 0, 0, -600})
             throw "Fifth test failed";
 
         cout << "All tests passed" << endl;
     
-    } catch(string err) {
-        cout << err.c_str() << endl;
+    } catch(char const* err) {
+        cout << err << endl;
     }
 
     return 0;
