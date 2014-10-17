@@ -30,10 +30,8 @@ bool isRotation(const string& s1, const string& s2) {
     if (s1.size() != s2.size())
         return false;
     
-    string s3 = s1 + s1;
-    if (s3.find(s2) == string::npos)
-        return false;
-    return true;
+    string doubled = s1 + s1;
+    return doubled.find(s2) != string::npos;
 }
 
 int main(int argc, const char * argv[])
