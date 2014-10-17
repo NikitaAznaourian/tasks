@@ -29,7 +29,8 @@ struct classcomp {
         if (lhs.first != rhs.first)
             return lhs.first < rhs.first;
 
-        return rhs.second < lhs.second;
+        auto same_first = lhs.first;
+        return (same_first+rhs.second) < (same_first+lhs.second);
     }
 };
 
