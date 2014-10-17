@@ -27,6 +27,8 @@ using namespace std;
 */
 
 void RLEEncoding(const string& s, string& res) {
+    res.clear();
+
     if (s.size() == 0)
         return;
     
@@ -37,14 +39,14 @@ void RLEEncoding(const string& s, string& res) {
         if (s[pos] == lastChar) {
             counter++;
         } else {
-            res.append(to_string(counter)).append(1, lastChar);
+            res.append(to_string(counter)).push_back(lastChar);
             counter = 1;
             lastChar = s[pos];
         }
         pos++;
     }
     
-    res.append(to_string(counter)).append(1, lastChar);
+    res.append(to_string(counter)).push_back(lastChar);
     return;
 }
 
