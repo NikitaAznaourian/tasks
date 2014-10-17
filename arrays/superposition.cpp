@@ -35,33 +35,23 @@ struct classcomp {
 
 int maxCover(const vector<pair<int,int>>& v) {
     
-    multimap<pair<int, int>, int, classcomp> points; // second param is cover level
-    for (size_t i = 0; i < v.size(); i++) {
-        if (v[i].first > v[i].second)
+    vector<pair<int, int>> segments(v);
+    sort(segments.begin(), segments.end(), classcomp());
+
+    vector<int> cover_level(segments.size(), 1);
+
+    for (size_t outer_idx = 0; outer_idx < v.size(); outer_idx++) {
+        if (segments[outer_idx].first > segments[outer_idx].second)
             throw "bad input";
-        points.insert({{v[i].first, v[i].second}, 1}); // initialize cover level with 1
-    }
-    
-    int maxCover = 0;
-    
-    for (auto it = points.begin(); it != points.end(); it++) {
-        int pointCover = it->second;
-        if (pointCover > maxCover)
-            maxCover = pointCover;
-        
-        auto it2 = it;
-        it2++;
-        
-        while (it2 != points.end() && (it2->first.first <= it->first.second) ) {
-            if (it2->first.second <= it->first.second) {
-                it2->second += 1;
+
+        for (size_t inner_idx = outer_idx + 1; inner_idx < v.size() && (segments[inner_idx].first <= segments[outer_idx].second); inner_idx++) {
+            if (segments[inner_idx].second <= segments[outer_idx].second) {
+                cover_level[inner_idx]++;
             }
-            it2++;
         }
-        
     }
-    
-    return maxCover;
+
+    return *max_element(cover_level.begin(), cover_level.end());
 }
 
 int main(int argc, const char * argv[])
