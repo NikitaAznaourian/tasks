@@ -51,7 +51,7 @@ void RLEDecoding(const string& s, string& res) {
             if (isDigit(s[pos])) {
                 digit.append(1,s[pos]);
             } else {
-                res.append(atoi(digit.c_str()), s[pos]);
+                res.append(stoi(digit), s[pos]);
                 st = Char;
                 digit.clear();
             }
