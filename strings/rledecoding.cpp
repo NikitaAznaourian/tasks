@@ -15,21 +15,21 @@
 #include <map>
 #include <string>
 #include <algorithm>
+#include <locale>
 
 using namespace std;
 
 /* Condition:
-    RLE encoding - encode the string
+    RLE decoding - decode the string
  
    Solution:
     Complexity: O(n) - пройтись по строке
     Additional memory: O(1)
 */
 
-bool isDigit(const char& c) {
-    if ((int)'0' <= (int) c && (int) c <= (int) '9')
-        return true;
-    return false;
+bool isDigit(const char c) {
+    locale loc;
+    return isdigit(c, loc);
 }
 
 enum State {Init, Digit, Char};
