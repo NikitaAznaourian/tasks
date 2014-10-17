@@ -29,8 +29,7 @@ struct classcomp {
         if (lhs.first != rhs.first)
             return lhs.first < rhs.first;
 
-        auto same_first = lhs.first;
-        return (same_first+rhs.second) < (same_first+lhs.second);
+        return rhs.second < lhs.second;
     }
 };
 
@@ -40,7 +39,7 @@ int maxCover(const vector<pair<int,int>>& v) {
     for (size_t i = 0; i < v.size(); i++) {
         if (v[i].first > v[i].second)
             throw "bad input";
-        points.insert({{v[i].first, v[i].second-v[i].first}, 1}); // initialize cover level with 1
+        points.insert({{v[i].first, v[i].second}, 1}); // initialize cover level with 1
     }
     
     int maxCover = 0;
@@ -53,8 +52,8 @@ int maxCover(const vector<pair<int,int>>& v) {
         auto it2 = it;
         it2++;
         
-        while (it2 != points.end() && (it2->first.first <= it->first.first+it->first.second) ) {
-            if (it2->first.first+it2->first.second <= it->first.first+it->first.second) {
+        while (it2 != points.end() && (it2->first.first <= it->first.second) ) {
+            if (it2->first.second <= it->first.second) {
                 it2->second += 1;
             }
             it2++;
