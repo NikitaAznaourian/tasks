@@ -40,12 +40,12 @@ void RLEDecoding(const string& s, string& res) {
     string digit;
     
     while (pos < s.size()) {
-        if (st == Init) {
+        if (st == Init || st == Char) {
             if (isDigit(s[pos])) {
                 digit.push_back(s[pos]);
                 st = Digit;
             } else {
-                throw "Not a digit at the begining";
+                throw "Digit expected";
             }
         } else if (st == Digit) {
             if (isDigit(s[pos])) {
@@ -54,13 +54,6 @@ void RLEDecoding(const string& s, string& res) {
                 res.append(stoi(digit), s[pos]);
                 st = Char;
                 digit.clear();
-            }
-        } else if (st == Char) {
-            if (isDigit(s[pos])) {
-                digit.push_back(s[pos]);
-                st = Digit;
-            } else {
-                throw "Letter after letter";
             }
         }
         pos++;
