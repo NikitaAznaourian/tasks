@@ -35,10 +35,9 @@ bool isDigit(const char c) {
 
 void RLEDecoding(const string& s, string& res) {
     bool read_digits = false;
-    size_t pos = 0;
     size_t digit = 0;
     
-    while (pos < s.size()) {
+    for (size_t pos = 0; pos < s.size(); pos++) {
         if (isDigit(s[pos])) {
             digit *= 10;
             digit += s[pos] - '0';
@@ -52,7 +51,6 @@ void RLEDecoding(const string& s, string& res) {
                 throw "Digit expected";
             }
         }
-        pos++;
     }
     
     if (read_digits)
