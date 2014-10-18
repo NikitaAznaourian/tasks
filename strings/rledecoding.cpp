@@ -28,6 +28,8 @@ using namespace std;
 */
 
 void RLEDecoding(const string& s, string& res) {
+    res.clear();
+
     locale loc;
     bool count_found = false;
     size_t count = 0;
