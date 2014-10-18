@@ -32,14 +32,14 @@ void RLEDecoding(const string& s, string& res) {
     bool count_found = false;
     size_t count = 0;
     
-    for (size_t pos = 0; pos < s.size(); pos++) {
-        if (isdigit(s[pos], loc)) {
+    for (char c : s) {
+        if (isdigit(c, loc)) {
             count *= 10;
-            count += s[pos] - '0';
+            count += c - '0';
             count_found = true;
         } else  {
             if (count_found) {
-                res.append(count, s[pos]);
+                res.append(count, c);
                 count_found = false;
                 count = 0;
             } else {
