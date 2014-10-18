@@ -27,18 +27,13 @@ using namespace std;
     Additional memory: O(1)
 */
 
-bool isDigit(const char c) {
-    locale loc;
-    return isdigit(c, loc);
-}
-
-
 void RLEDecoding(const string& s, string& res) {
+    locale loc;
     bool read_digits = false;
     size_t digit = 0;
     
     for (size_t pos = 0; pos < s.size(); pos++) {
-        if (isDigit(s[pos])) {
+        if (isdigit(s[pos], loc)) {
             digit *= 10;
             digit += s[pos] - '0';
             read_digits = true;
