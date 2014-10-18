@@ -32,34 +32,33 @@ bool isDigit(const char c) {
     return isdigit(c, loc);
 }
 
-enum State {Init, Digit, Char};
 
 void RLEDecoding(const string& s, string& res) {
-    State st = Init;
+    bool read_digits = false;
     size_t pos = 0;
     string digit;
     
     while (pos < s.size()) {
-        if (st == Init || st == Char) {
+        if (!read_digits) {
             if (isDigit(s[pos])) {
                 digit.push_back(s[pos]);
-                st = Digit;
+                read_digits = true;
             } else {
                 throw "Digit expected";
             }
-        } else if (st == Digit) {
+        } else {
             if (isDigit(s[pos])) {
                 digit.push_back(s[pos]);
             } else {
                 res.append(stoi(digit), s[pos]);
-                st = Char;
+                read_digits = false;
                 digit.clear();
             }
         }
         pos++;
     }
     
-    if (st == Digit)
+    if (read_digits)
         throw "Digit without a letter at the end";
     return;
 }
