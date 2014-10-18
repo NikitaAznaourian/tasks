@@ -29,26 +29,26 @@ using namespace std;
 
 void RLEDecoding(const string& s, string& res) {
     locale loc;
-    bool read_digits = false;
-    size_t digit = 0;
+    bool count_found = false;
+    size_t count = 0;
     
     for (size_t pos = 0; pos < s.size(); pos++) {
         if (isdigit(s[pos], loc)) {
-            digit *= 10;
-            digit += s[pos] - '0';
-            read_digits = true;
+            count *= 10;
+            count += s[pos] - '0';
+            count_found = true;
         } else  {
-            if (read_digits) {
-                res.append(digit, s[pos]);
-                read_digits = false;
-                digit = 0;
+            if (count_found) {
+                res.append(count, s[pos]);
+                count_found = false;
+                count = 0;
             } else {
                 throw "Digit expected";
             }
         }
     }
     
-    if (read_digits)
+    if (count_found)
         throw "Digit without a letter at the end";
     return;
 }
