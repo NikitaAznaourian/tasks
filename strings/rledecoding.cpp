@@ -36,23 +36,25 @@ bool isDigit(const char c) {
 void RLEDecoding(const string& s, string& res) {
     bool read_digits = false;
     size_t pos = 0;
-    string digit;
+    size_t digit = 0;
     
     while (pos < s.size()) {
         if (!read_digits) {
             if (isDigit(s[pos])) {
-                digit.push_back(s[pos]);
+                digit *= 10;
+                digit += s[pos] - '0';
                 read_digits = true;
             } else {
                 throw "Digit expected";
             }
         } else {
             if (isDigit(s[pos])) {
-                digit.push_back(s[pos]);
+                digit *= 10;
+                digit += s[pos] - '0';
             } else {
-                res.append(stoi(digit), s[pos]);
+                res.append(digit, s[pos]);
                 read_digits = false;
-                digit.clear();
+                digit = 0;
             }
         }
         pos++;
