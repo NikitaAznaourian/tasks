@@ -39,22 +39,17 @@ void RLEDecoding(const string& s, string& res) {
     size_t digit = 0;
     
     while (pos < s.size()) {
-        if (!read_digits) {
-            if (isDigit(s[pos])) {
-                digit *= 10;
-                digit += s[pos] - '0';
-                read_digits = true;
-            } else {
-                throw "Digit expected";
-            }
-        } else {
-            if (isDigit(s[pos])) {
-                digit *= 10;
-                digit += s[pos] - '0';
-            } else {
+        if (isDigit(s[pos])) {
+            digit *= 10;
+            digit += s[pos] - '0';
+            read_digits = true;
+        } else  {
+            if (read_digits) {
                 res.append(digit, s[pos]);
                 read_digits = false;
                 digit = 0;
+            } else {
+                throw "Digit expected";
             }
         }
         pos++;
