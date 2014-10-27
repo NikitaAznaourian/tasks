@@ -15,58 +15,42 @@
 #include <map>
 #include <string>
 #include <algorithm>
+#include <locale>
 
 using namespace std;
 
 /* Condition:
-    RLE encoding - encode the string
+    RLE decoding - decode the string
  
    Solution:
     Complexity: O(n) - пройтись по строке
     Additional memory: O(1)
 */
 
-bool isDigit(const char& c) {
-    if ((int)'0' <= (int) c && (int) c <= (int) '9')
-        return true;
-    return false;
-}
-
-enum State {Init, Digit, Char};
-
 void RLEDecoding(const string& s, string& res) {
-    State st = Init;
-    size_t pos = 0;
-    string digit;
+    res.clear();
+
+    locale loc;
+    bool count_found = false;
+    size_t count = 0;
     
-    while (pos < s.size()) {
-        if (st == Init) {
-            if (isDigit(s[pos])) {
-                digit.append(1,s[pos]);
-                st = Digit;
+    for (char c : s) {
+        if (isdigit(c, loc)) {
+            count *= 10;
+            count += c - '0';
+            count_found = true;
+        } else  {
+            if (count_found) {
+                res.append(count, c);
+                count_found = false;
+                count = 0;
             } else {
-                throw "Not a digit at the begining";
-            }
-        } else if (st == Digit) {
-            if (isDigit(s[pos])) {
-                digit.append(1,s[pos]);
-            } else {
-                res.append(atoi(digit.c_str()), s[pos]);
-                st = Char;
-                digit.clear();
-            }
-        } else if (st == Char) {
-            if (isDigit(s[pos])) {
-                digit.append(1,s[pos]);
-                st = Digit;
-            } else {
-                throw "Letter after letter";
+                throw "Digit expected";
             }
         }
-        pos++;
     }
     
-    if (st == Digit)
+    if (count_found)
         throw "Digit without a letter at the end";
     return;
 }
