@@ -40,10 +40,11 @@ void phoneNumbersHelper(const map<int, vector<char>>& s, const string& phone, ve
     
     
     int curNum = (int) phone[pos] - (int)'0';
-    if (s.count(curNum) == 0)
+    auto iter = s.find(curNum);
+    if (iter == s.end())
         throw "Unknown button";
     
-    const vector<char> chars = s.at(curNum);
+    const vector<char> chars = iter->second;
     if (chars.size() == 0)
         throw "Button without digits";
     
