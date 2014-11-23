@@ -5,7 +5,7 @@ public:
     Node* left = nullptr, *right = nullptr, *parent = nullptr;
 };
 
-void treeInsert(Node* root, Node* z) {
+void treeInsert(Node*& root, Node* z) {
     if (!root) {
         root = z;
         return;
