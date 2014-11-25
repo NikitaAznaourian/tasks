@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -32,11 +33,7 @@ double sqrt(double x, double acc) {
     if (x == 1)
         return 1;
 
-    if (x > 1) {
-        return sqrtH(x, 1, x, acc);
-    } else {
-        return sqrtH(x, 0.0, 1.0, acc);
-    }
+    return sqrtH(x, 0, max(x,1.0), acc);
 }
 
 int main() {
